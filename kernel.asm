@@ -8,7 +8,28 @@ section .text
 	dd - ( 0x1BADB002 - 0x00)	;checksum m+f+c should be zero
 
 global start
+global keyboard_handler
+global read_port
+globabl write_port
+global load_idt
+
+
 extern kmain
+extern keyboard_handler_main
+
+read_port:
+	mov edx, [esp + 4]
+
+	in al,dx
+	ret
+
+write_port:
+	mov edx, [exp + 4]
+
+
+keyboard_handler:
+	call keyboard_handler_main
+	iretd
 
 start:
 	cli	;block interrupts
